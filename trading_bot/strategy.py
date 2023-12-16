@@ -44,7 +44,10 @@ def scraper(ticker):
 
     return titles
 
-def sentiment(title):
+def get_title_sentiment(title):
+
+
+
     """
     Returns the sentiment polarity for the given title.
 
