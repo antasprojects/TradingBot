@@ -44,10 +44,7 @@ def scraper(ticker):
 
     return titles
 
-def get_title_sentiment(title):
-
-
-
+def get_sentiment_title(title):
     """
     Returns the sentiment polarity for the given title.
 
@@ -60,3 +57,26 @@ def get_title_sentiment(title):
     blob = TextBlob(title)
     sentiment = blob.sentiment.polarity
     return(sentiment)
+
+def get_sentiment_ticker(ticker):
+    """
+    Calculate the average sentiment for a given stock ticker based on scraped article titles.
+
+    Args:
+        ticker (str): Ticker symbol of the stock.
+
+    Returns:
+        float: Average sentiment value for the given stock ticker, calculated from the sentiment
+               of individual article titles related to the stock.
+    """
+
+    titles = scraper(ticker)
+    sentiments = []
+
+    for title in titles:
+        sentiments.append(get_sentiment_title(title))
+
+    average = sum(sentiments) / len(sentiments)
+
+    return average
+
