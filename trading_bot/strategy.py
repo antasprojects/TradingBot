@@ -44,6 +44,7 @@ def scraper(ticker):
 
     return titles
 
+
 def get_sentiment_title(title):
     """
     Returns the sentiment polarity for the given title.
@@ -57,6 +58,7 @@ def get_sentiment_title(title):
     blob = TextBlob(title)
     sentiment = blob.sentiment.polarity
     return(sentiment)
+
 
 def get_sentiment_ticker(ticker):
     """
@@ -80,6 +82,7 @@ def get_sentiment_ticker(ticker):
 
     return average
 
+
 def get_sentiment_dict(tickers):
     """
     Calculate and return a dictionary of stock tickers mapped to their average sentiment values.
@@ -96,3 +99,55 @@ def get_sentiment_dict(tickers):
         sentiment_dict[ticker] = round(get_sentiment_ticker(ticker), 3)
     return sentiment_dict
 
+
+def get_true_sentiment_dict(sentiment_dict):
+    """
+    Normalize sentiment values for each stock ticker by subtracting the average sentiment across all tickers.
+
+    Args:
+        sentiment_dict (dict): A dictionary where keys are stock ticker symbols, and values are the
+                               corresponding average sentiment values.
+
+    Returns:
+        dict: A dictionary where keys are stock ticker symbols, and values are the normalized sentiment
+              values, rounded to three decimal places.
+    """
+
+    true_sentiment_dict = {}
+    total = sum(sentiment_dict.values())
+    average_sentiment = round(total / len(sentiment_dict), 3)
+
+    for ticker in sentiment_dict:
+        true_sentiment_dict[ticker] = round(sentiment_dict[ticker] - average_sentiment, 3)
+
+    return true_sentiment_dict
+
+
+def porfolio_allocation(true_sentiment_dict):
+    """
+    Adjust the portfolio allocation based on normalized sentiment values for each stock ticker.
+
+    Args:
+        sentiment_dict (dict): A dictionary where keys are stock ticker symbols, and values are the
+                               normalized sentiment values.
+
+    Returns:
+        dict: A dictionary where keys are stock ticker symbols, and values represent the adjusted
+              portfolio allocation percentages for each stock.
+    """
+    portfolio_allocation = {}
+
+    for ticker, normalized_sentiment in true_sentiment_dict.items():
+        stock_share = limit - multiplier * normalized_sentiment
+        stock_share = max(0, stock_share)  # Ensure share is not negative.
+        portfolio_allocation[ticker] = stock_share
+
+    # Calculate the total adjusted share across all tickers.
+    total_share = sum(porfolio_allocation.values())
+
+    # Calculate the percentage allocation for each ticker based on the total adjusted share.
+    for ticker in porfolio_allocation:
+        percentage_allocation = round(100 * porfolio_allocation[ticker] / total_share, 2)
+        porfolio_allocation[ticker] = percentage_allocation
+
+    return porfolio_allocation
