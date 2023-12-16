@@ -80,3 +80,19 @@ def get_sentiment_ticker(ticker):
 
     return average
 
+def get_sentiment_dict(tickers):
+    """
+    Calculate and return a dictionary of stock tickers mapped to their average sentiment values.
+
+    Args:
+        tickers (list): List of stock ticker symbols.
+
+    Returns:
+        dict: A dictionary where keys are stock ticker symbols, and values are the corresponding
+              average sentiment values, rounded to three decimal places.
+    """
+    sentiment_dict = {}
+    for ticker in tickers:
+        sentiment_dict[ticker] = round(get_sentiment_ticker(ticker), 3)
+    return sentiment_dict
+
