@@ -2,6 +2,27 @@ from bs4 import BeautifulSoup
 from urllib.request import urlopen, Request
 from textblob import TextBlob
 
+tickers = [
+    "BA",    # Boeing Co.
+    "CAT",   # Caterpillar Inc.
+    "GS",    # Goldman Sachs Group Inc.
+    "HD",    # Home Depot Inc.
+    "JPM",   # JPMorgan Chase & Co.
+    "KO",    # The Coca-Cola Co.
+    "MSFT",  # Microsoft Corp.
+    "NKE",   # Nike Inc.
+    "V",     # Visa Inc.
+    "WMT",   # Walmart Inc.
+]
+
+# values used to calculate share of porfolio can be modified to increase or decreaase impact of the sentiment
+limit = 0.5
+multiplier = 3
+
+
+
+
+
 def scraper(ticker):
     """
     Scrapes article titles from finviz for the given ticker.
