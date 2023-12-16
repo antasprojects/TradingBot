@@ -123,7 +123,9 @@ def get_true_sentiment_dict(sentiment_dict):
     return true_sentiment_dict
 
 
-def porfolio_allocation(true_sentiment_dict):
+def portfolio_allocation(true_sentiment_dict):
+
+
     """
     Adjust the portfolio allocation based on normalized sentiment values for each stock ticker.
 
@@ -143,11 +145,33 @@ def porfolio_allocation(true_sentiment_dict):
         portfolio_allocation[ticker] = stock_share
 
     # Calculate the total adjusted share across all tickers.
-    total_share = sum(porfolio_allocation.values())
+    total_share = sum(portfolio_allocation.values())
 
     # Calculate the percentage allocation for each ticker based on the total adjusted share.
-    for ticker in porfolio_allocation:
-        percentage_allocation = round(100 * porfolio_allocation[ticker] / total_share, 2)
-        porfolio_allocation[ticker] = percentage_allocation
+    for ticker in portfolio_allocation:
+        percentage_allocation = round(100 * portfolio_allocation[ticker] / total_share, 2)
+        portfolio_allocation[ticker] = percentage_allocation
 
-    return porfolio_allocation
+    return portfolio_allocation
+
+
+def main():
+    """
+    Perform sentiment analysis on financial articles and adjust portfolio allocation accordingly.
+
+    Returns:
+        dict: A dictionary where keys are stock ticker symbols, and values represent the adjusted
+    """ 
+    # Step 1: Calculate sentiment values for each stock ticker based on scraped article titles.
+    sentiment_dict = get_sentiment_dict(tickers)
+
+    # Step 2: Normalize sentiment values for each stock ticker.
+    true_sentiment_dict = get_true_sentiment_dict(sentiment_dict)
+
+    # Step 3: Adjust portfolio allocation based on normalized sentiment values.
+    portfolio = portfolio_allocation(true_sentiment_dict)
+    return portfolio
+
+if __name__ == "__main__":
+    main()
+
