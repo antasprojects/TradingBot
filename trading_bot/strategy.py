@@ -19,11 +19,8 @@ tickers = [
 limit = 0.5
 multiplier = 3
 
-
-
-
-
 def scraper(ticker):
+
     """
     Scrapes article titles from finviz for the given ticker.
 
@@ -46,3 +43,17 @@ def scraper(ticker):
 
 
     return titles
+
+def sentiment(title):
+    """
+    Returns the sentiment polarity for the given title.
+
+    Args:
+        title (str): Title of an article.
+
+    Returns:
+        float: Sentiment polarity.
+    """
+    blob = TextBlob(title)
+    sentiment = blob.sentiment.polarity
+    return(sentiment)
