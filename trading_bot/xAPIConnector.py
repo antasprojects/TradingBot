@@ -4,8 +4,6 @@ import logging
 import time
 import ssl
 from threading import Thread
-from models import TradeTransInfo
-
 # set to true on debug environment only
 DEBUG = True
 
@@ -273,9 +271,6 @@ def baseCommand(commandName, arguments=None):
 def loginCommand(userId, password, appName=''):
     return baseCommand('login', dict(userId=userId, password=password, appName=appName))
 
-def tradeTransactionCommand(trade: TradeTransInfo):
-
-    return baseCommand("tradeTransaction", dict(TradeTransInfo=trade.dict()))
 
 
 
