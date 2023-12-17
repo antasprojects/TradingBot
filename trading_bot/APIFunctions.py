@@ -54,3 +54,16 @@ def buy(symbol, volume, customComment="", price=10000, cmd=0, expiration=0, orde
     tradeTransactionStatusResponse = client.execute(baseCommand("tradeTransactionStatus", status_arguments))
 
     return tradeTransactionResponse, tradeTransactionStatusResponse
+
+def get_stocks_value():
+    """
+    Retrieve the total value of all stocks through the xAPIConnector API.
+
+    Returns:
+    float: The total value of all stocks.
+    """
+
+
+    getMarginLevelResponse = client.execute(baseCommand("getMarginLevel"))
+    return getMarginLevelResponse["returnData"]['stockValue']
+
