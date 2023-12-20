@@ -172,6 +172,9 @@ def main():
     portfolio = portfolio_allocation(true_sentiment_dict)
     return portfolio
 
+
 if __name__ == "__main__":
     main()
 
+
+print(main())
