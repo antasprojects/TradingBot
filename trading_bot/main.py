@@ -1,6 +1,6 @@
 from strategy import main
 from APIFunctions import get_stock_price, get_porfolio
-
+from inputs import tickers
 
 Investment = 50000
 #Inputs: 
@@ -12,7 +12,7 @@ Investment = 50000
 # 3. Make the transactions required to achieve the desired portfolio distribution
 current_portfolio = get_porfolio()
 
-desired_portfolio = main()
+desired_portfolio = main(tickers)
 
 print(current_portfolio)
 print(desired_portfolio)
@@ -25,7 +25,6 @@ def adjust_portfolio(current_portfolio, desired_portfolio):
         if value_difference > 0:
             x = 0
             
-
 def adjust_position(symbol):
     current_value = round(Investment * current_portfolio[symbol] / 100 , 2)
     desired_value = round(Investment * desired_portfolio["AMZN"] / 100 , 2)
