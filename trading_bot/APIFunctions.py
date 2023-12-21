@@ -1,4 +1,6 @@
 from xAPIConnector import APIClient, loginCommand, baseCommand
+import time
+
 
 userId = 15468026
 password = "Dupadupa1!"
@@ -140,5 +142,7 @@ def get_stock_price(symbol):
 	}
 
     getSymbolResponse = client.execute(baseCommand("getSymbol", arguments))
+
+    time.sleep(0.5)
 
     return getSymbolResponse["returnData"]["ask"]

@@ -1,35 +1,26 @@
-from strategy import main
+from strategy import calculate_strategy
 from APIFunctions import get_stock_price, get_porfolio
-from inputs import tickers
+from inputs import tickers, Investment
+GBPUSD = get_stock_price("GBPUSD")
 
-Investment = 50000
-#Inputs: 
-#  - Money invested (GBP)
-# Objectives:
-#
 # 1. Check the allocation of the current portfolio
 # 2. Check the calculated desired portfolio according to the strategy (based on the sentiment)
 # 3. Make the transactions required to achieve the desired portfolio distribution
-current_portfolio = get_porfolio()
 
-desired_portfolio = main(tickers)
-
-print(current_portfolio)
-print(desired_portfolio)
 
 def adjust_portfolio(current_portfolio, desired_portfolio):
-
-    for symbol in current_portfolio:
-        value_difference = current_portfolio[symbol] - desired_portfolio[symbol]
-        stock_price = get_stock_price(symbol)
-        if value_difference > 0:
-            x = 0
+    for symbol in desired_portfolio:
+        adjust_position(symbol)
             
 def adjust_position(symbol):
-    current_value = round(Investment * current_portfolio[symbol] / 100 , 2)
-    desired_value = round(Investment * desired_portfolio["AMZN"] / 100 , 2)
-    current_price = get_stock_price(symbol)
-    GBPUSD = get_stock_price("GBPUSD")
+
+    if symbol + ".US_9" in current_portfolio:
+        current_value = round(Investment * current_portfolio[symbol + ".US_9"] / 100 , 2)
+    else:
+        current_value = 0 
+
+    desired_value = round(Investment * desired_portfolio[symbol] / 100 , 2)
+    current_price = get_stock_price(symbol + ".US_9")
     current_price = current_price / GBPUSD
     if current_value < desired_value:
         # Buy more of the stock
@@ -42,3 +33,10 @@ def adjust_position(symbol):
 
     return transaction_type
 
+current_portfolio = get_porfolio()
+desired_portfolio = calculate_strategy(tickers)
+
+print(current_portfolio)
+print(desired_portfolio)
+
+print(adjust_portfolio(current_portfolio, desired_portfolio))

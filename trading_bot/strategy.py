@@ -3,10 +3,6 @@ from urllib.request import urlopen, Request
 from textblob import TextBlob
 from inputs import limit, multiplier, tickers
 
-def filter_tickers(tickers):
-    filtered_tickers = [ticker.split('.')[0] for ticker in tickers]
-    return filtered_tickers
-
 def scraper(ticker):
 
     """
@@ -32,6 +28,7 @@ def scraper(ticker):
 
     return titles
 
+
 def get_sentiment_title(title):
     """
     Returns the sentiment polarity for the given title.
@@ -45,6 +42,7 @@ def get_sentiment_title(title):
     blob = TextBlob(title)
     sentiment = blob.sentiment.polarity
     return(sentiment)
+
 
 def get_sentiment_ticker(ticker):
     """
@@ -68,6 +66,7 @@ def get_sentiment_ticker(ticker):
 
     return average
 
+
 def get_sentiment_dict(tickers):
     """
     Calculate and return a dictionary of stock tickers mapped to their average sentiment values.
@@ -83,6 +82,7 @@ def get_sentiment_dict(tickers):
     for ticker in tickers:
         sentiment_dict[ticker] = round(get_sentiment_ticker(ticker), 3)
     return sentiment_dict
+
 
 def get_true_sentiment_dict(sentiment_dict):
     """
@@ -105,6 +105,7 @@ def get_true_sentiment_dict(sentiment_dict):
         true_sentiment_dict[ticker] = round(sentiment_dict[ticker] - average_sentiment, 3)
 
     return true_sentiment_dict
+
 
 def portfolio_allocation(true_sentiment_dict):
 
@@ -137,6 +138,7 @@ def portfolio_allocation(true_sentiment_dict):
 
     return portfolio_allocation
 
+
 def calculate_strategy(tickers):
     """
     Perform sentiment analysis on financial articles and adjust portfolio allocation accordingly.
@@ -144,7 +146,6 @@ def calculate_strategy(tickers):
     Returns:
         dict: A dictionary where keys are stock ticker symbols, and values represent the adjusted
     """ 
-    tickers = filter_tickers(tickers)
     # Step 1: Calculate sentiment values for each stock ticker based on scraped article titles.
     sentiment_dict = get_sentiment_dict(tickers)
 
@@ -154,6 +155,7 @@ def calculate_strategy(tickers):
     # Step 3: Adjust portfolio allocation based on normalized sentiment values.
     portfolio = portfolio_allocation(true_sentiment_dict)
     return portfolio
+
 
 if __name__ == "__main__":
     calculate_strategy(tickers)
