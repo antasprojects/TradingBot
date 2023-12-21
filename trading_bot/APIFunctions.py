@@ -1,6 +1,4 @@
 from xAPIConnector import APIClient, loginCommand, baseCommand
-from time import time
-
 
 userId = 15468026
 password = "Dupadupa1!"
@@ -125,11 +123,18 @@ def get_porfolio():
 
     getTradesResponse = client.execute(baseCommand("getTrades", arguments))
 
-    return getTradesResponse
+    portfolio_dict = {}
+
+    for i in range(len(getTradesResponse["returnData"])):
+        portfolio_dict[getTradesResponse["returnData"][i]["symbol"]] = round(getTradesResponse["returnData"][i]["nominalValue"] / 500, 3)
+
+
+    return portfolio_dict
 
 
 def get_stock_price(symbol):
-    # stock price in GDB
+
+
     arguments = {
 		"symbol": symbol
 	}
@@ -137,4 +142,3 @@ def get_stock_price(symbol):
     getSymbolResponse = client.execute(baseCommand("getSymbol", arguments))
 
     return getSymbolResponse["returnData"]["ask"]
-

@@ -13,6 +13,7 @@ tickers = [
     "NKE",   # Nike Inc.
     "V",     # Visa Inc.
     "WMT",   # Walmart Inc.
+    "AMZN" 
 ]
 
 # values used to calculate share of porfolio can be modified to increase or decreaase impact of the sentiment
@@ -175,6 +176,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-print(main())
