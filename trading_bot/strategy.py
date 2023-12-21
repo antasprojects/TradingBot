@@ -144,7 +144,9 @@ def calculate_strategy(tickers):
     Perform sentiment analysis on financial articles and adjust portfolio allocation accordingly.
 
     Returns:
-        dict: A dictionary where keys are stock ticker symbols, and values represent the adjusted
+        dict: A dictionary with stock ticker symbols as keys 
+        and corresponding percentages in the portfolio for each stock.
+
     """ 
     # Step 1: Calculate sentiment values for each stock ticker based on scraped article titles.
     sentiment_dict = get_sentiment_dict(tickers)

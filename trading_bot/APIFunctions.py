@@ -1,16 +1,13 @@
 from xAPIConnector import APIClient, loginCommand, baseCommand
 import time
-from inputs import Investment
+from inputs import Investment, userID, password
 
-
-userId = 0
-password = ""
-
+# Initialize the API client
 client = APIClient()
 
 
-loginCommand(userId, password, appName='')
-loginResponse = client.execute(loginCommand(userId=userId, password=password))
+loginCommand(userID, password, appName='')
+loginResponse = client.execute(loginCommand(userId=userID, password=password))
 
 def buy(symbol, volume, customComment="", price=0, cmd=0, expiration=0, order=0, sl=0, tp=0, type=0):
     """
@@ -117,7 +114,7 @@ def get_stocks_value():
     return getMarginLevelResponse["returnData"]['stockValue']
 
 
-def get_porfolio():
+def get_portfolio():
     """
     Retrieve the current portfolio based on open trades.
 
@@ -159,6 +156,7 @@ def get_stock_price(symbol):
 
     getSymbolResponse = client.execute(baseCommand("getSymbol", arguments))
 
+    time.sleep(0.5)
 
     return getSymbolResponse["returnData"]["ask"]
 

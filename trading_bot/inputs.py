@@ -1,4 +1,11 @@
 # Configuration File
+
+# User ID for XTB account
+userID = 0
+
+# Password for XTB account
+password = ""
+
 # Investment amount represents the total capital available for the portfolio.
 # Modify this value based on your desired investment amount.
 Investment = 50000
