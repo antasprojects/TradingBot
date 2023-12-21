@@ -1,15 +1,15 @@
 This Python script is a portfolio management system that uses sentiment analysis to dynamically adjust the portfolio allocation for a list of selected stocks. The system reads configuration details from the provided file, allowing users to customize their investment amount, list of stocks, and parameters influencing sentiment-based portfolio adjustments. To execute the portfolio management system, run the main script (main.py) after configuring the parameters in inputs.py. Then the program analyzes to adjust the account's portfolio, prompting the user for confirmation before executing any trades.
 
-Configuration File - inputs.py
+	Configuration File - inputs.py
 
-serves as the primary input for the portfolio management system. Users can modify the following parameters based on their preferences:
+Serves as the primary input for the portfolio management system. Users can modify the following parameters based on their preferences:
 Investment - variable to reflect the desired total capital available for your portfolio in GBP.
 
 tickers - list to include the stock symbols for the companies you want to include in your portfolio.
 
 limit and multiplier - variables to change the impact of sentiment on your portfolio allocation. A higher multiplier will result in more substantial adjustments based on sentiment values.
 
-Sentiment Analysis - strategy.py
+	Sentiment Analysis - strategy.py
 This Python script performs sentiment analysis on financial articles related to a list of selected stocks. It uses web scraping to retrieve article titles, analyzes the sentiment of each title, and then calculates the portfolio with given stocks according to the formula. It contains the following functions:
 
 scraper(ticker)
@@ -33,10 +33,10 @@ Adjusts the portfolio allocation based on normalized sentiment values for each s
 calculate_strategy(tickers)
 The main function of the file, perform sentiment analysis on financial articles and output a dictionary with stock ticker symbols as keys and corresponding percentages in the portfolio for each stock.
 
-API interaction - xAPIconnector.py
+	API interaction - xAPIconnector.py
 Python wrapper provided by XTB to improve the convenience of using the XTB API for trading purposes.
 
-API interaction - APIFunctions.py
+	API interaction - APIFunctions.py
 Contains multiple functions that further simplify the interaction with the XTB API for the specific purposes of this bot.
 
 APIClient() initializes the xAPIConnector API client, allowing users to interact with the trading platform.
@@ -60,7 +60,7 @@ get_stock_price(symbol)
 Fetches the current ask price for a given stock symbol from the xAPIConnector API.
 
 
-Executing the trading bot - main.py 
+	Executing the trading bot - main.py 
 The main file of the program can be executed to adjust an account trading portfolio based on an output portfolio derived from sentiment analysis.
 
 adjust_position(symbol)
