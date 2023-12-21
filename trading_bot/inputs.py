@@ -1,5 +1,5 @@
 
-Investment = 50000
+Investment = 50000 
 
 tickers = [
     "BA",    # Boeing Co.
@@ -14,6 +14,6 @@ tickers = [
     "AMZN" 
 ]
 
-# values used to calculate share of porfolio can be modified to increase or decreaase impact of the sentiment
+# values used to calculate desired porfolio can be modified to increase or decreaase impact of the sentiment
 limit = 0.5
 multiplier = 3

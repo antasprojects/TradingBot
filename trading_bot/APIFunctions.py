@@ -1,9 +1,10 @@
 from xAPIConnector import APIClient, loginCommand, baseCommand
 import time
+from inputs import Investment
 
 
-userId = 15468026
-password = "Dupadupa1!"
+userId = 0
+password = ""
 
 client = APIClient()
 
@@ -127,9 +128,15 @@ def get_porfolio():
 
     portfolio_dict = {}
 
-    for i in range(len(getTradesResponse["returnData"])):
-        portfolio_dict[getTradesResponse["returnData"][i]["symbol"]] = round(getTradesResponse["returnData"][i]["nominalValue"] / 500, 3)
+    for trade in getTradesResponse["returnData"]:
+        symbol = trade["symbol"]
+        nominal_value = round(trade["nominalValue"] / Investment * 100 , 3)
 
+        if symbol in portfolio_dict:
+            portfolio_dict[symbol] += nominal_value
+            portfolio_dict[symbol] = round(portfolio_dict[symbol], 3)
+        else:
+            portfolio_dict[symbol] = nominal_value
 
     return portfolio_dict
 
@@ -146,3 +153,4 @@ def get_stock_price(symbol):
     time.sleep(0.5)
 
     return getSymbolResponse["returnData"]["ask"]
+

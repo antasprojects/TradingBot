@@ -1,16 +1,20 @@
 from strategy import calculate_strategy
-from APIFunctions import get_stock_price, get_porfolio
+from APIFunctions import get_stock_price, get_porfolio, buy, sell
 from inputs import tickers, Investment
+
+
 GBPUSD = get_stock_price("GBPUSD")
-
-# 1. Check the allocation of the current portfolio
-# 2. Check the calculated desired portfolio according to the strategy (based on the sentiment)
-# 3. Make the transactions required to achieve the desired portfolio distribution
+current_portfolio = get_porfolio()
+desired_portfolio = calculate_strategy(tickers)
 
 
-def adjust_portfolio(current_portfolio, desired_portfolio):
+def adjust_portfolio(desired_portfolio):
+    transaction_list = []
     for symbol in desired_portfolio:
-        adjust_position(symbol)
+        transaction = adjust_position(symbol)
+        transaction_list.append(transaction)
+    return transaction_list
+    
             
 def adjust_position(symbol):
 
@@ -24,19 +28,54 @@ def adjust_position(symbol):
     current_price = current_price / GBPUSD
     if current_value < desired_value:
         # Buy more of the stock
-        quantity_to_adjust = round((desired_value - current_value) / current_price, 0)
-        transaction_type = f"Buy {quantity_to_adjust} shares of {symbol}"
+        volume = round((desired_value - current_value) / current_price, 0)
+        if volume:
+            transaction = confirm_and_make_transaction(symbol, volume, "buy")
+            return transaction
+
     elif current_value > desired_value:
         # Sell some of the stock
-        quantity_to_adjust = round((current_value - desired_value) / current_price, 0)
-        transaction_type = f"Sell {quantity_to_adjust} shares of {symbol}"
+        volume = round((current_value - desired_value) / current_price, 0)
+        if volume:
+            transaction = confirm_and_make_transaction(symbol, volume, "sell")
+            return transaction
 
-    return transaction_type
+    return 
 
-current_portfolio = get_porfolio()
-desired_portfolio = calculate_strategy(tickers)
 
-print(current_portfolio)
-print(desired_portfolio)
+def confirm_and_make_transaction(symbol, volume, type):
+     while True:
+        clear_console()
+        user_input = input(f"To adjust the portfolio, you have to {type} {volume} shares of {symbol}. Do you confirm the transaction? (y/n): ").lower()
+        if user_input == 'y':
+            # Make the transaction (replace this with your actual transaction logic)
+            print(f"Transaction confirmed for {symbol} - {type} {volume} shares.")
+            if type == "buy":
+                buy(symbol + ".US_9", volume)
+                return f"Transaction confirmed for {symbol} - {type} {volume} shares."
+            elif type == "sell":
+                sell(symbol + ".US_9", volume)
+                return f"Transaction confirmed for {symbol} - {type} {volume} shares."
 
-print(adjust_portfolio(current_portfolio, desired_portfolio))
+        elif user_input == 'n':
+            print("Transaction canceled.")
+            return
+        else:
+            print("Invalid input. Please enter 'y' for yes or 'n' for no.")
+            return
+
+
+def main():
+    transations = adjust_portfolio(desired_portfolio)
+    current_portfolio = get_porfolio()
+    print("Portfolio has been adjusted, list of transactions made:")
+    for transaction in transations:
+        if transaction:
+            print(transaction)
+    print("Your current portfolio is: ")
+    print(current_portfolio)
+    print("The desired portfolio calculated is: ")
+    print(desired_portfolio)
+    return
+
+main()
