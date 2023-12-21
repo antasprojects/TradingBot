@@ -15,7 +15,7 @@ def scraper(ticker):
         list: List of article titles.
     """
 
-    url = "https://finviz.com/quote.ashx?t=" + ticker
+    url = f"https://finviz.com/quote.ashx?t={ticker}"
     titles = []
     request = Request(url=url, headers={"user-agent": "app"})
     response = urlopen(request)
@@ -75,7 +75,7 @@ def get_sentiment_dict(tickers):
         tickers (list): List of stock ticker symbols.
 
     Returns:
-        dict: A dictionary where keys are stock ticker symbols, and values are the corresponding
+        sentiment_dict: A dictionary where keys are stock ticker symbols, and values are the corresponding
               average sentiment values, rounded to three decimal places.
     """
     sentiment_dict = {}

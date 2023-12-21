@@ -66,7 +66,7 @@ def sell(symbol, volume, customComment="", price=1000, cmd=1, expiration=0, orde
     - volume (float): The volume of the transaction.
     - customComment (str, optional): Custom comment for the transaction. Default is an empty string.
     - price (float, optional): The price of the transaction. Default is 10000.
-    - cmd (int, optional): The command for the transaction. Default is 1.
+    - cmd (int, optional): The command for the transaction. 0 for buy 1 for sell.
     - expiration (int, optional): The expiration time for the transaction. Default is 0.
     - order (int, optional): The order for the transaction. Default is 0.
     - sl (float, optional): The stop-loss value for the transaction. Default is 0.
@@ -105,8 +105,6 @@ def sell(symbol, volume, customComment="", price=1000, cmd=1, expiration=0, orde
 
 def get_stocks_value():
 
-
-
     """
     Retrieve the total value of all stocks through the xAPIConnector API.
 
@@ -120,6 +118,13 @@ def get_stocks_value():
 
 
 def get_porfolio():
+    """
+    Retrieve the current portfolio based on open trades.
+
+    Returns:
+        dict: A dictionary where keys are stock symbols, and values are the corresponding
+              nominal values in the portfolio.
+    """
     arguments = {
 		"openedOnly": True
 	}
@@ -142,15 +147,18 @@ def get_porfolio():
 
 
 def get_stock_price(symbol):
+    """
+    Retrieve the current ask price for a given stock symbol.
 
-
+    Args:
+    symbol (str): The stock symbol for which to fetch the current ask price.
+    """
     arguments = {
 		"symbol": symbol
 	}
 
     getSymbolResponse = client.execute(baseCommand("getSymbol", arguments))
 
-    time.sleep(0.5)
 
     return getSymbolResponse["returnData"]["ask"]
 
